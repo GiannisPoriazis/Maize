@@ -1,0 +1,7 @@
+<div class="vertical-progress">
+  <div *ngFor="let step of steps; let i = index" class="step" [ngClass]="{'filled': i === 0}">
+    <div class="step-bar step-fill"></div>
+    <div class="step-bar step-empty"></div>
+    <div class="step-title" [ngClass]="{'enabled': i === 0}">{{step | translate}}</div>
+  </div>
+</div>

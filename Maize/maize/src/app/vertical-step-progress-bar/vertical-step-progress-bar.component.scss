@@ -1,0 +1,60 @@
+$stepCount: 4; // Number of steps
+$stepHeight: 50px; // Height of each step
+$barColor: #009688; // Color of the progress bar
+$titleColor: #333; // Color of step titles
+$titleFontSize: 16px; // Font size of step titles
+$fillColor: #4caf50; // Color to fill steps
+
+.vertical-progress {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step {
+  position: relative;
+  width: 10px; // Width of the step bar
+  height: $stepHeight;
+  margin-bottom: 20px; // Spacing between steps
+}
+
+.step-bar {
+  position: absolute;
+  background: linear-gradient(to top, rgba(255,255,255,0.1) 100%, rgba(0,150,136,1) 0%);
+  height: $stepHeight;
+  width: 10px;
+}
+
+.step-empty {
+  background: rgba(255,255,255,0.1);
+  height: 100%;
+  transition: height 1s ease-in-out;
+  bottom: 0;
+}
+
+.step-fill {
+  background: rgba(0,150,136,1);
+  height: 0;
+  transition: height 1s ease-in-out;
+}
+
+.step-title {
+  position: absolute;
+  top: 50%;
+  left: 20px;
+  transform: translateY(-50%);
+  color: $titleColor;
+  font-size: $titleFontSize;
+}
+
+.step-title.enabled {
+    color: white;
+}
+
+.step.filled .step-empty {
+  height: 0;
+}
+
+.step.filled .step-fill {
+  height: 100%;
+}

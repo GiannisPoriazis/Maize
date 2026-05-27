@@ -1,0 +1,158 @@
+<div class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 h-100 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <span>{{pageTitle | translate}}</span>
+                <hr>
+                <form
+                    [formGroup]="userForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row py-2">
+                        <label class="form-label">User Details</label>
+                        <div class="col-md-4">
+                            <div class="col-md-12">                            
+                                <div class="form-floating">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Firstname"
+                                        placeholder="Firstname" 
+                                        autocomplete="off" 
+                                        name="Firstname" 
+                                        formControlName="firstname">
+                                    <label>First Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Lastname" 
+                                        placeholder="Lastname" 
+                                        autocomplete="off" 
+                                        name="Lastname" 
+                                        formControlName="lastname">
+                                    <label>Last Name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row py-3">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Email Address</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-at"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Email" 
+                                        placeholder="Email" 
+                                        aria-label="Email" 
+                                        aria-describedby="basic-addon1" 
+                                        name="Email" 
+                                        formControlName="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Credentials</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-regular fa-user"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Username" 
+                                        placeholder="Username" 
+                                        aria-label="Username" 
+                                        name="Username" 
+                                        formControlName="username">
+                                    <span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
+                                    <ng-container *ngIf="!showPassword">
+                                        <input 
+                                            type="password" 
+                                            class="form-control" 
+                                            id="Password" 
+                                            placeholder="Password" 
+                                            aria-label="Password" 
+                                            name="Password" 
+                                            formControlName="password">
+                                    </ng-container>
+                                    <ng-container *ngIf="showPassword">
+                                        <input
+                                            type="text" 
+                                            class="form-control" 
+                                            id="Password" 
+                                            placeholder="Password" 
+                                            aria-label="Password" 
+                                            name="Password" 
+                                            formControlName="password">
+                                    </ng-container>
+                                    <button *ngIf="!showPassword" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePasswordVisibility()"><i class="fa-solid fa-eye-slash"></i></button> 
+                                    <button *ngIf="showPassword" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePasswordVisibility()"><i class="fa-solid fa-eye"></i></button>                                        
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Role</label>
+                                <div class="input-group">
+                                    <span class="input-group-text" id="basic-addon1"><i class="fa-solid fa-fingerprint"></i></span>
+                                    <select 
+                                        class="form-select" 
+                                        aria-label="Default select example" 
+                                        id="Role" 
+                                        name="Role" 
+                                        formControlName="role">
+                                        <option *ngFor="let role of userRoles" [ngValue]="role.id">{{role.name | translate }}</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div *ngIf="!user" class="form-check form-switch">
+                                    <input 
+                                        class="form-check-input" 
+                                        type="checkbox" 
+                                        role="switch" 
+                                        id="InformUserCredentials" 
+                                        name="InformUserCredentials" 
+                                        formControlName="informUserCredentials"
+                                        checked>
+                                    <label class="form-check-label" for="InformUserCredentials">Inform the new user of their account credentials</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <button *ngIf="!user" class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Create</button>
+                        <button *ngIf="user" class="btn btn-primary" type="submit" [disabled]="!userForm.valid">Save</button>
+                        <button *ngIf="user" class="btn btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#DeleteUserModal">Delete</button>
+                        <button *ngIf="user" class="btn btn-secondary ms-2" type="button" (click)="backAction()">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<modal
+    type="confirmation"
+    modalId="DeleteUserModal"
+    modalTitle="Delete User"
+    modalBody="Are you sure you want to delete this user?"
+    cancelClass="btn-secondary"
+    cancelText="Cancel"
+    confirmClass="btn-danger"
+    confirmText="Delete"
+    (confirmEvent)="deleteUser()">
+</modal>

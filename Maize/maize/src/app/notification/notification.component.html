@@ -1,0 +1,10 @@
+<div class="fixed bottom-0 right-0" [ngClass]="alertBackgroundColor">
+  <div class="p-10">
+    <div class="flex items-center text-white text-sm font-bold rounded shadow-md" role="alert">
+      <span class="flex" [innerHtml]="alertMessage"></span>
+      <button type="button" class="flex close-notification">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+    </div>
+  </div>
+</div>

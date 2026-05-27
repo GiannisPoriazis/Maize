@@ -1,0 +1,15 @@
+<div class="input-group">
+    <span class="input-group-text" (click)="d.toggle()" type="button"><i class="{{icon}}"></i></span>
+    <input
+        class="form-control"
+        placeholder="dd/mm/yyyy"
+        name="dp"
+        ngbDatepicker
+        [formControl]="control"
+        [minDate]="{year: 1920, month: 1, day: 1}"
+        #d="ngbDatepicker"
+        readonly
+        (click)="d.toggle()"
+        (dateSelect)="dateChange()"
+    />
+</div>

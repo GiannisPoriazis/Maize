@@ -1,0 +1,41 @@
+<div *ngIf="!selectedClient" class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 mb-4 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <span>Manage Clients</span>
+                <hr>
+                <div class="col-md-3">
+                    <form (ngSubmit)="onSubmit(searchClientForm)" #searchClientForm="ngForm">
+                        <div class="form-floating">
+                            <input
+                                type="text" 
+                                class="form-control" 
+                                id="SearchClient"
+                                name="SearchClient"
+                                placeholder=""
+                                ngModel>
+                            <label for="SearchClient">Search Client</label>
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <grid
+                    [colDefs]="colDefs"
+                    [rowData]="rowData"
+                    (rowDoubleClickedEvent)="selectClient($event)">
+                </grid>
+            </div>
+        </div>
+    </div>
+</div>
+<app-client
+    *ngIf="selectedClient"
+    [client]="selectedClient"
+    (backActionEvent)="stopEdit()">
+</app-client>

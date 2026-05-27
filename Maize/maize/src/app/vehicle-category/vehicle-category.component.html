@@ -1,0 +1,23 @@
+<div class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div class="row col-md-12 g-0 d-inline-block">
+        <div backgroundTheme theme class="d-flex shadow-sm flex-column align-items-start p-4 col-md-6">
+            <div class="col-md-12">
+                <span>Vehicle Categories</span>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-column">
+                <div class="col-md-12">
+                    <grid
+                        [colDefs]="colDefs"
+                        [rowData]="rowData"
+                        (updateGridEvent)="updateData($event)"
+                        rowSelection="multiple">
+                    </grid>
+                </div>
+                <div class="alert alert-success mt-4 mb-0 text-align-center" role="alert">
+                    A vehicle category is a classification that groups vehicles based on their shared characteristics, such as size, purpose, or body type.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

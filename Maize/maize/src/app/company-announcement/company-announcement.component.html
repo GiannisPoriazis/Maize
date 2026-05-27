@@ -1,0 +1,83 @@
+<form
+    [formGroup]="announcementForm"
+    (ngSubmit)="onSubmit()">
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div *ngIf="!!announcement && !editorMode" theme class="col-md-12">
+                <span>{{ 'companyAnnouncement_title' | translate }}</span>
+            </div>
+            <div *ngIf="!announcement || editorMode" theme class="col-md-12">
+                <div class="form-floating mb-3">
+                    <input 
+                        type="text" 
+                        class="form-control" 
+                        placeholder="Announcement Title" 
+                        id="AnnouncementTitle"
+                        name="AnnouncementTitle" 
+                        formControlName="announcement_title">
+                    <label for="AnnouncementTitle">Title</label>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="bg-white row col-md-12 shadow-sm g-0 h-100 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div *ngIf="!announcement || editorMode" class="col-md-12">
+                <p-editor
+                    [style]="{ height: '320px' }" 
+                    formControlName="announcement_data"/>          
+            </div>
+            <div *ngIf="!!announcement && !editorMode" class="col-12">
+                <p-fieldset legend="{{author}} - {{announcement.created_at}}">
+                    <h2>{{announcement.title}}</h2>
+                    <br>
+                    <span #AnnouncementData class="m-0 text-decoration-none"></span>
+                </p-fieldset>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme class="row mt-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-3">
+            <div class="col-md-12">
+                <button 
+                    type="button" 
+                    class="btn btn-primary"
+                    (click)="backAction()">
+                    {{ 'general_return_button' | translate }}
+                </button>
+                <button 
+                    *ngIf="!announcement || editorMode"
+                    type="submit" 
+                    class="btn btn-success ms-2">
+                    {{ 'general_submit_button' | translate }}
+                </button>
+                <button 
+                    *ngIf="!!announcement && !!currentUser && announcement.author_id === currentUser.id && !editorMode"
+                    type="button" 
+                    class="btn btn-warning ms-2"
+                    (click)="editAction()">
+                    {{ 'general_edit_button' | translate }}
+                </button>
+                <button 
+                    *ngIf="!!announcement && !!currentUser && announcement.author_id === currentUser.id && !editorMode"
+                    type="button" 
+                    class="btn btn-danger ms-2"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#DeleteModal">
+                    {{ 'general_delete_button' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</form>
+<modal
+    type="confirmation"
+    modalId="DeleteModal"
+    modalTitle="Delete Announcement"
+    modalBody="Are you sure you want to delete this announcement?"
+    cancelClass="btn-secondary"
+    cancelText="Cancel"
+    confirmClass="btn-danger"
+    confirmText="Delete"
+    (confirmEvent)="deleteAction()">
+</modal>

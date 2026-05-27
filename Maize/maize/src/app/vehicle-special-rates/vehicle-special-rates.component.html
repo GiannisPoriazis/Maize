@@ -1,0 +1,107 @@
+<div class="container-fluid p-4 bg-transparent g-0 d-inline-block">
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div theme class="col-md-12">
+                <span>{{ 'vehicle_special_rates_title' | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4 col-md-12 g-0 h-100 d-inline-block">
+        <div class="d-flex flex-row align-items-start">
+            <div class="col-md-12">
+                <div class="row py-2">
+                    <div class="accordion accordion-flush" id="accordionVehicleRates">
+                        <div class="accordion-item shadow-sm">
+                            <h2 class="accordion-header">
+                                <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicle-rates" aria-expanded="true" aria-controls="vehicle-rates">
+                                    {{ 'vehicle_general' | translate }}
+                                </button>
+                            </h2>
+                            <div backgroundTheme theme id="vehicle-rates" class="accordion-collapse collapse" data-bs-parent="#accordionVehicleRates">
+                                <div class="accordion-body">
+                                    <div class="col-md-12 py-2">
+                                        <grid
+                                            [colDefs]="vehicleColDefs"
+                                            [rowData]="vehicleRowData"
+                                            (updateGridEvent)="updateData($event, vehicleGridData, 'vehicle_id')"
+                                            rowSelection="multiple">
+                                        </grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item shadow-sm">
+                            <h2 class="accordion-header">
+                                <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicle-model-rates" aria-expanded="true" aria-controls="vehicle-model-rates">
+                                    {{ 'vehicle_model_general' | translate }}
+                                </button>
+                            </h2>
+                            <div backgroundTheme theme id="vehicle-model-rates" class="accordion-collapse collapse" data-bs-parent="#accordionVehicleRates">
+                                <div class="accordion-body">
+                                    <div class="col-md-12 py-2">
+                                        <grid
+                                            [colDefs]="modelColDefs"
+                                            [rowData]="modelRowData"
+                                            (updateGridEvent)="updateData($event, modelGridData, 'vehicle_model_id')"
+                                            rowSelection="multiple">
+                                        </grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item shadow-sm">
+                            <h2 class="accordion-header">
+                                <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicle-category-rates" aria-expanded="true" aria-controls="vehicle-category-rates">
+                                    {{ 'vehicle_category_general' | translate }}
+                                </button>
+                            </h2>
+                            <div backgroundTheme theme id="vehicle-category-rates" class="accordion-collapse collapse" data-bs-parent="#accordionVehicleRates">
+                                <div class="accordion-body">
+                                    <div class="col-md-12 py-2">
+                                        <grid
+                                            [colDefs]="categoryColDefs"
+                                            [rowData]="categoryRowData"
+                                            (updateGridEvent)="updateData($event, categoryGridData, 'vehicle_category_id')"
+                                            rowSelection="multiple">
+                                        </grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item shadow-sm">
+                            <h2 class="accordion-header">
+                                <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#vehicle-type-rates" aria-expanded="true" aria-controls="vehicle-type-rates">
+                                    {{ 'vehicle_type_general' | translate }}
+                                </button>
+                            </h2>
+                            <div backgroundTheme theme id="vehicle-type-rates" class="accordion-collapse collapse" data-bs-parent="#accordionVehicleRates">
+                                <div class="accordion-body">
+                                    <div class="col-md-12 py-2">
+                                        <grid
+                                            [colDefs]="typeColDefs"
+                                            [rowData]="typeRowData"
+                                            (updateGridEvent)="updateData($event, typeGridData, 'vehicle_type_id')"
+                                            rowSelection="multiple">
+                                        </grid>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-3">
+            <div class="col-md-12">
+              <button 
+                type="submit"
+                (click)="saveAction()" 
+                class="btn btn-success">
+                    {{ 'general_save_button' | translate }}
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

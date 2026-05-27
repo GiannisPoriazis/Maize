@@ -1,0 +1,47 @@
+<div backgroundTheme class="container-fluid p-4 bg-transparent g-0 d-inline-block">
+    <div *ngIf="!selectedAnnouncement && !editorEnabled" backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div theme class="col-md-12">
+                <span>{{ 'companyAnnouncement_title' | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!selectedAnnouncement && !editorEnabled" backgroundTheme theme class="row col-md-12 shadow-sm g-0 h-100 d-inline-block">
+        <p-toolbar backgroundTheme theme>
+            <div class="p-toolbar-group-start">
+                <p-button (click)="createAnnouncement()" icon="pi pi-plus" class="mr-2"/>
+                <p-button (click)="refreshAnnouncements()" icon="pi pi-refresh" class="mr-2"/>
+            </div>
+        </p-toolbar>
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <p-dataView backgroundTheme [value]="dataTable.getValue().CompanyAnnouncement">
+                    <ng-template pTemplate="list" let-products>
+                        <div class="grid grid-nogutter">
+                            <div class="col-12" *ngFor="let item of dataTable.getValue().CompanyAnnouncement; let first = first" class="col-12">
+                                <div class="flex flex-column sm:flex-row sm:align-items-start gap-3" [ngClass]="{ 'border-top-1 surface-border': !first }">
+                                    <div class="col-12 p-0 flex flex-column md:flex-row justify-content-between md:align-items-center flex-1 gap-4">
+                                        <div class="col-12 p-0 flex flex-row md:flex-column justify-content-between align-items-start gap-2">
+                                            <div class="col-12">
+                                                <p-fieldset legend="{{item.created_at}}" (click)="openAnnouncement(item.id)" class="fieldset-link">
+                                                    <a backgroundTheme theme class="m-0 text-decoration-none link-dark">
+                                                        {{ item.title }}
+                                                    </a>
+                                                </p-fieldset>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-template>
+                </p-dataView>                
+            </div>
+        </div>
+    </div>
+    <app-company-announcement
+    *ngIf="!!selectedAnnouncement || editorEnabled"
+    [announcement]="selectedAnnouncement"
+    (backActionEvent)="stopEdit()">  
+    </app-company-announcement>
+</div>

@@ -1,0 +1,119 @@
+<div class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 mb-4 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <span>{{ 'dashboard_title' | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="grid column-gap-4 row g-0 mb-4">
+        <div *ngIf="companyType === appService.CompanyTypes.company_type_car_rental" backgroundTheme theme class="d-flex shadow-sm flex-column align-items-center p-4 col">
+            <div class="col-md-12">
+                <h5>Bookings</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-row align-items-center justify-content-md-between">
+                <div class="col-md-6 .flex-grow-1 .flex-shrink-1">
+                    <h2 *ngIf="!!vehicleBookingsLineChartData" class="fw-bold">{{vehicleBookingsLineChartData!.datasets[0].data[1]}}</h2>
+                    <span 
+                    class="fw-bold"
+                    [class.text-danger]="+vehicleBookingsLinePercentage! < 0" 
+                    [class.text-success]="+vehicleBookingsLinePercentage! > 0">
+                    {{vehicleBookingsLinePercentage}}%
+                    </span>
+                </div>
+                <p-chart 
+                    [data]="vehicleBookingsLineChartData" 
+                    [options]="vehicleBookingsLineChartOptions"
+                    type="line"
+                    height="100px"
+                    width="150px"
+                    [responsive]="true"/>
+            </div>
+        </div>
+        <div *ngIf="companyType === appService.CompanyTypes.company_type_car_rental" backgroundTheme theme class="d-flex shadow-sm flex-column align-items-center p-4 col">
+            <div class="col-md-12">
+                <h5>Clients</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-row align-items-center justify-content-md-between">
+                <div class="col-md-6 .flex-grow-1 .flex-shrink-1">
+                    <h2 *ngIf="!!clientsLineChartData" class="fw-bold">{{clientsLineChartData!.datasets[0].data[1]}}</h2>
+                    <span 
+                    class="fw-bold"
+                    [class.text-danger]="+clientsLinePercentage! < 0" 
+                    [class.text-success]="+clientsLinePercentage! > 0">
+                    {{clientsLinePercentage}}%
+                    </span>
+                </div>
+                <p-chart 
+                    [data]="clientsLineChartData" 
+                    [options]="clientsLineChartOptions"
+                    type="line"
+                    height="100px"
+                    width="150px"
+                    [responsive]="true"/>
+            </div>
+        </div>
+        <div *ngIf="companyType === appService.CompanyTypes.company_type_car_rental" backgroundTheme theme class="d-flex shadow-sm flex-column align-items-center p-4 col">
+            <div class="col-md-12">
+                <h5>Revenue</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-row align-items-center justify-content-md-between">
+                <div class="col-md-6 flex-grow-1 flex-shrink-1">
+                    <h2 *ngIf="!!carRentalRevenueLineChartData" class="fw-bold">{{carRentalRevenueLineChartData!.datasets[0].data[1]}}€</h2>
+                    <span 
+                    class="fw-bold"
+                    [class.text-danger]="+carRentalRevenueLinePercentage! < 0" 
+                    [class.text-success]="+carRentalRevenueLinePercentage! > 0">
+                    {{carRentalRevenueLinePercentage}}%
+                    </span>
+                </div>
+                <p-chart 
+                    [data]="carRentalRevenueLineChartData" 
+                    [options]="carRentalRevenueLineChartOptions"
+                    type="line"
+                    height="100px"
+                    width="150px"
+                    [responsive]="true"/>
+            </div>
+        </div>
+        <div *ngIf="companyType === appService.CompanyTypes.company_type_car_rental" backgroundTheme theme class="d-flex shadow-sm flex-column align-items-center p-4 col">
+            <div class="col-md-12">
+                <h5>Clients</h5>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-row align-items-center justify-content-md-between">
+                <div class="col-md-6 flex-grow-1 flex-shrink-1">
+                    <h4>120</h4>
+                    <span>+12%</span>
+                </div>
+                <p-chart 
+                    [data]="vehicleBookingsLineChartData" 
+                    [options]="vehicleBookingsLineChartOptions"
+                    type="line"
+                    height="100px"
+                    width="150px"
+                    [responsive]="true"/>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 g-0 d-inline-block">
+        <div *ngIf="companyType === appService.CompanyTypes.company_type_car_rental" backgroundTheme theme class="d-flex shadow-sm flex-column align-items-center p-4 col-md-6">
+            <div class="col-md-12">
+                <span>Bookings</span>
+                <hr>
+            </div>
+            <div class="d-flex flex-row align-items-start p-4">
+                <p-chart 
+                    [data]="vehicleBookingsBarChartData" 
+                    [options]="vehicleBookingsBarChartOptions"
+                    type="bar"
+                    [responsive]="true"
+                    width="500px"
+                    />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,472 @@
+<div class="container-fluid p-4 bg-transparent g-0 d-inline-block">
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div theme class="col-md-12">
+                <span>{{ pageTitle | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row col-md-12 g-0 h-100 d-inline-block">
+        <div class="d-flex flex-row align-items-start">
+            <div class="col-md-12">
+                <form
+                    [formGroup]="bookingForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row py-2">
+                        <div class="accordion accordion-flush" id="accordionBookingInformation">
+                            <div class="accordion-item shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button backgroundTheme theme class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#flush-booking-information" aria-expanded="true" aria-controls="flush-booking-information">
+                                        Booking Information
+                                    </button>
+                                </h2>
+                                <div backgroundTheme theme id="flush-booking-information" class="accordion-collapse collapse show" data-bs-parent="#accordionBookingInformation">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 py-2">
+                                            <div class="col-md-6">
+                                                <div class="col-md-12">  
+                                                    <div class="row g-3 py-2 align-items-center">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label">Check-out / Check-in</label>                          
+                                                        </div>
+                                                        <div class="col d-flex">
+                                                            <datepicker
+                                                                icon="fa-solid fa-calendar-days"
+                                                                [control]="bookingForm.get('date_from')"
+                                                                (changeEvent)="calculateDates()"
+                                                            ></datepicker>
+                                                            <ngb-timepicker formControlName="time_from" [spinners]="false" class="pl-2" />
+                                                        </div>
+                                                        <div class="col-md-1 vr p-0"></div>
+                                                        <div class="col d-flex pe-0">
+                                                            <datepicker
+                                                                icon="fa-solid fa-calendar-days"
+                                                                [control]="bookingForm.get('date_to')"
+                                                                (changeEvent)="calculateDates()"
+                                                            ></datepicker>
+                                                            <ngb-timepicker formControlName="time_to" [spinners]="false" class="pl-2" />
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-md-12">
+                                                    <div class="row g-3 py-2 align-items-center">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label">Pick-up Location</label>                          
+                                                        </div>
+                                                        <p-autoComplete 
+                                                            class="col-md-8"
+                                                            formControlName="checkout"
+                                                            [forceSelection]="true"
+                                                            [dropdown]="true"
+                                                            [suggestions]="autocompleteSelectService.filteredStations" 
+                                                            (completeMethod)="autocompleteSelectService.filterStations($event, this.dataTable.getValue().CarRentalStation)"
+                                                            field="station_name" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="col-md-12">
+                                                    <div class="row g-3 py-2 align-items-center">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label">Return Location</label>                          
+                                                        </div>
+                                                        <p-autoComplete 
+                                                            class="col-md-8"
+                                                            formControlName="checkin"
+                                                            [forceSelection]="true" 
+                                                            [dropdown]="true"
+                                                            [suggestions]="autocompleteSelectService.filteredStations" 
+                                                            (completeMethod)="autocompleteSelectService.filterStations($event, this.dataTable.getValue().CarRentalStation)"
+                                                            field="station_name" />
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [class.outline-danger]="this.bookingForm.controls['vehicle_id'].invalid" class="accordion-item shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-vehicle-information" aria-expanded="true" aria-controls="flush-vehicle-information">
+                                        Vehicle Selection
+                                    </button>
+                                </h2>
+                                <div backgroundTheme theme id="flush-vehicle-information" class="accordion-collapse collapse" data-bs-parent="#accordionBookingInformation">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 py-2">
+                                            <grid
+                                                [colDefs]="vehicleColDefs"
+                                                [rowData]="vehicleRowData"
+                                                (rowClickedEvent)="selectVehicle($event)">
+                                            </grid>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="!!vehicleAddonConnections.length" class="accordion-item shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-addon-selection" aria-expanded="true" aria-controls="flush-addon-selection">
+                                        Add-on Selection
+                                    </button>
+                                </h2>
+                                <div backgroundTheme theme id="flush-addon-selection" class="accordion-collapse collapse" data-bs-parent="#accordionAddonSelection">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 py-2">
+                                            <div class="col-md-6">
+                                                <div class="col-md-12">  
+                                                    <div *ngFor="let addon of vehicleAddonConnections" class="row g-3 align-items-center">
+                                                        <div class="col-md-3">
+                                                            <label class="form-label">{{ addon.title }} | <strong>{{ addon.rate }}€</strong></label>                          
+                                                        </div>
+                                                        <div class="col d-flex">
+                                                            <p-inputNumber formControlName="addon{{addon.addonId}}" (onInput)="calculateAddons()" class="text-center" [showButtons]="true" buttonLayout="horizontal" spinnerMode="horizontal" [step]="1" [min]="0" [max]="addon.max_quantity" [inputStyle]="{ width: '3rem' }">
+                                                                <ng-template pTemplate="incrementbuttonicon">
+                                                                    <span class="pi pi-plus"></span>
+                                                                </ng-template>
+                                                                <ng-template pTemplate="decrementbuttonicon">
+                                                                    <span class="pi pi-minus"></span>
+                                                                </ng-template>
+                                                            </p-inputNumber>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-client-information" aria-expanded="true" aria-controls="flush-client-information">
+                                        Client Information
+                                    </button>
+                                </h2>
+                                <div backgroundTheme theme id="flush-client-information" class="accordion-collapse collapse" data-bs-parent="#accordionBookingInformation">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 py-2">
+                                            <div class="d-flex">
+                                                <div class="form-check">
+                                                    <input 
+                                                        class="form-check-input" 
+                                                        type="radio" 
+                                                        formControlName="client_type" 
+                                                        (change)="clientUpdate()"
+                                                        value="0"
+                                                        name="client_type" 
+                                                        id="client_new_type">
+                                                    <label class="form-check-label">
+                                                      New Client
+                                                    </label>
+                                                  </div>
+                                                  <div rulerTheme class="vr mx-4"></div>
+                                                  <div class="form-check">
+                                                    <input 
+                                                        class="form-check-input" 
+                                                        type="radio" 
+                                                        formControlName="client_type" 
+                                                        (change)="clientUpdate()"
+                                                        value="1" 
+                                                        name="client_type" 
+                                                        id="client_existing_type">
+                                                    <label class="form-check-label">
+                                                      Existing Client
+                                                    </label>
+                                                  </div>
+                                            </div>
+                                            <hr>
+                                            <div *ngIf="bookingForm.get('client_type')?.value == 0">
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">  
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="FirstName" class="form-label">First Name</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="FirstName"
+                                                                    autocomplete="off" 
+                                                                    name="FirstName" 
+                                                                    formControlName="first_name"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="Last Name" class="form-label">Last Name</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="LastName"
+                                                                    autocomplete="off" 
+                                                                    name="LastName" 
+                                                                    formControlName="last_name"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="Email" class="form-label">E-mail</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="Email"
+                                                                    autocomplete="off" 
+                                                                    name="Email" 
+                                                                    formControlName="email"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Tax ID</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="TaxId"
+                                                                    autocomplete="off" 
+                                                                    name="TaxId" 
+                                                                    formControlName="taxId"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="MobilePhone" class="form-label">Mobile Phone</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="MobilePhone"
+                                                                    autocomplete="off" 
+                                                                    name="MobilePhone" 
+                                                                    formControlName="mobile_phone"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label class="form-label">Birth Date</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <datepicker
+                                                                    icon="fa-solid fa-calendar-days"
+                                                                    [control]="bookingForm.get('birth_date')"
+                                                                ></datepicker>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div *ngIf="bookingForm.get('client_type')?.value == 1">
+                                                <div class="col-md-12 py-2">
+                                                    <grid
+                                                        [colDefs]="clientColDefs"
+                                                        [rowData]="clientRowData"
+                                                        (rowClickedEvent)="selectClient($event)">
+                                                    </grid>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="accordion-item shadow-sm">
+                                <h2 class="accordion-header">
+                                    <button backgroundTheme theme class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-booking-summary" aria-expanded="true" aria-controls="flush-booking-summary">
+                                        Billing
+                                    </button>
+                                </h2>
+                                <div backgroundTheme theme id="flush-booking-summary" class="accordion-collapse collapse" data-bs-parent="#accordionBookingInformation">
+                                    <div class="accordion-body">
+                                        <div class="col-md-12 py-2">
+                                            <div class="d-flex">
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" formControlName="billing_type" value="0" name="billing_type" id="billing_receipt_type">
+                                                    <label class="form-check-label">
+                                                      Receipt
+                                                    </label>
+                                                </div>
+                                                <div rulerTheme class="vr mx-4"></div>
+                                                <div class="form-check">
+                                                    <input class="form-check-input" type="radio" formControlName="billing_type" value="1" name="billing_type" id="billing_invoice_type">
+                                                    <label class="form-check-label">
+                                                        Invoice
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <hr>
+                                            <div *ngIf="bookingForm.get('billing_type')?.value == 1">
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">  
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="CompanyName" class="form-label">Company Name</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="CompanyName"
+                                                                    autocomplete="off" 
+                                                                    name="CompanyName" 
+                                                                    formControlName="company_name"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="TaxNumber" class="form-label">Tax Number</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <input 
+                                                                    type="text" 
+                                                                    class="form-control" 
+                                                                    id="TaxNumber"
+                                                                    autocomplete="off" 
+                                                                    name="TaxNumber" 
+                                                                    formControlName="tax_number"
+                                                                >
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-4">
+                                                    <div class="col-md-12">
+                                                        <div class="row g-3 py-2 align-items-center">
+                                                            <div class="col-md-4">
+                                                                <label for="Country" class="form-label">Country</label>                          
+                                                            </div>
+                                                            <div class="col-md-8">
+                                                                <p-autoComplete 
+                                                                    formControlName="billing_country"
+                                                                    [dropdown]="true" 
+                                                                    [suggestions]="autocompleteSelectService.filteredCountries" 
+                                                                    (completeMethod)="autocompleteSelectService.filterCountries($event, countries)" 
+                                                                    field="name">
+                                                                    <ng-template let-country pTemplate="item">
+                                                                        <div class="flex align-items-center gap-2">
+                                                                            <img 
+                                                                                src="https://primefaces.org/cdn/primeng/images/demo/flag/flag_placeholder.png" 
+                                                                                [class]="'flag flag-' + country.code.toLowerCase()" 
+                                                                                style="width: 18px" />
+                                                                            <div>{{ country.name }}</div>
+                                                                        </div>
+                                                                    </ng-template>
+                                                                </p-autoComplete>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <hr>
+                                            </div>
+                                            <div class="card" style="width: 18rem;">
+                                                <div class="card-body">
+                                                    <h5 class="card-title">Price Breakdown</h5>
+                                                    <h6 *ngIf="!booking" class="card-subtitle mb-2 text-body-secondary">Initial price</h6>
+                                                    <p *ngIf="!booking" class="card-text">
+                                                        <span class="fw-medium">Rate/Day: </span>
+                                                        <span #rate></span>
+                                                        <br>
+                                                        <span class="fw-medium">Days: </span>
+                                                        <span #days></span>
+                                                        <br>
+                                                        <span class="fw-medium">Total: </span>
+                                                        <span #preTotal></span>
+                                                        <br>
+                                                        <span class="fw-medium">Extras: </span>
+                                                        <span #addonsTotal></span>
+                                                    </p>
+                                                    <h6 class="card-subtitle mb-2 text-body-secondary">Discount</h6>
+                                                    <div class="input-group mb-3">
+                                                        <input 
+                                                            type="number" 
+                                                            min="0"
+                                                            max="100" 
+                                                            (change)="calculatePrice()"
+                                                            class="form-control" 
+                                                            formControlName="discount"
+                                                            aria-describedby="basic-addon2">
+                                                        <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-percent"></i></span>
+                                                    </div>
+                                                    <h6 class="card-subtitle mb-2 text-body-secondary">VAT</h6>
+                                                    <div class="input-group mb-3">
+                                                        <input
+                                                            type="number" 
+                                                            min="0" 
+                                                            max="100" 
+                                                            (change)="calculatePrice()"
+                                                            class="form-control" 
+                                                            formControlName="vat"
+                                                            aria-describedby="basic-addon2">
+                                                        <span class="input-group-text" id="basic-addon2"><i class="fa-solid fa-percent"></i></span>
+                                                    </div>
+                                                    <h6 class="card-subtitle mb-2 text-body-secondary">Final price</h6>
+                                                    <h3 #TotalPrice></h3>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div backgroundTheme class="row mt-4 col-md-12 shadow-sm g-0 d-inline-block">
+                        <div class="d-flex flex-row align-items-start p-3">
+                            <div class="col-md-12">
+                                <button *ngIf="!booking" class="btn btn-primary" type="submit" [disabled]="!bookingForm.valid">Create</button>
+                                <button *ngIf="booking" class="btn btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#DeleteBookingModal">Delete</button>
+                                <button *ngIf="booking" class="btn btn-secondary ms-2" type="button" (click)="backAction()">Back</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<modal
+    type="confirmation"
+    modalId="DeleteBookingModal"
+    modalTitle="Delete Booking"
+    modalBody="Are you sure you want to delete this booking"
+    cancelClass="btn-secondary"
+    cancelText="Cancel"
+    confirmClass="btn-danger"
+    confirmText="Delete"
+    (confirmEvent)="deleteBooking()">
+</modal>

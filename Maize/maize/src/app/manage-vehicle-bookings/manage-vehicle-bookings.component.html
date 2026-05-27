@@ -1,0 +1,41 @@
+<div *ngIf="!selectedEntity" class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 mb-4 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <span>Manage Bookings</span>
+                <hr>
+                <div class="col-md-3">
+                    <form (ngSubmit)="onSubmit(searchForm)" #searchForm="ngForm">
+                        <div class="form-floating">
+                            <input
+                                type="text" 
+                                class="form-control" 
+                                id="SearchEntity"
+                                name="SearchEntity"
+                                placeholder=""
+                                ngModel>
+                            <label for="SearchEntity">Search Booking</label>
+                        </div>
+                        <button class="btn btn-primary mt-3" type="submit">Search</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <grid
+                    [colDefs]="colDefs"
+                    [rowData]="rowData"
+                    (rowDoubleClickedEvent)="selectEntity($event)">
+                </grid>
+            </div>
+        </div>
+    </div>
+</div>
+<app-vehicle-booking
+    *ngIf="selectedEntity"
+    [booking]="selectedEntity"
+    (backActionEvent)="stopEdit()">
+</app-vehicle-booking>

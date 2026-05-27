@@ -1,0 +1,21 @@
+<div class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div class="row col-md-12 g-0 d-inline-block">
+        <div backgroundTheme theme class="d-flex shadow-sm flex-column align-items-start p-4 col-md-12">
+            <div class="col-md-12">
+                <span>Roles & Permissions</span>
+                <hr>
+            </div>
+            <div class="col-md-12 d-flex flex-column">
+                <div class="col-md-12">
+                    <grid
+                        [colDefs]="colDefs"
+                        [rowData]="rowData"
+                        [autoSizeColumns]="false"
+                        (updateGridEvent)="updateData($event)"
+                        rowSelection="multiple">
+                    </grid>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

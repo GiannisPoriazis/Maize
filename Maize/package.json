@@ -1,0 +1,9 @@
+{
+  "devDependencies": {
+    "node-sass": "^9.0.0"
+  },
+  "dependencies": {
+    "@aspnet/signalr": "^1.0.27",
+    "@ng-bootstrap/ng-bootstrap": "^16.0.0-rc.2"
+  }
+}

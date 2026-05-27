@@ -1,0 +1,179 @@
+<div class="row-content">
+
+  <div id="{{this.viewsArray[0].selectorId}}" class="view">
+    <p class="viewLabel">{{ 'welcome_maize' | translate }}</p>
+    <p>The setup wizard will help you optimize the platform according to your preferences.</p>
+    <p>When you're ready to begin click 'Start'</p>
+  </div>
+
+  <div id="{{this.viewsArray[1].selectorId}}" class="view disabled-visibility">
+    <p class="viewLabel">{{ this.viewsArray[1].title | translate }}</p>
+    <div class="view-container">
+      <div class="settings-container">
+        <div class="col-auto">
+          <div>
+            <label>What is your time zone?</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['timezone']">
+              <option *ngFor="let timezone of timezones" [ngValue]="timezone.value">{{timezone.key | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div>
+            <label>What is your preferred language?</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['language']">
+              <option *ngFor="let language of languages" [ngValue]="language">{{language | translate }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="viewIcon">
+        <i class="fa-regular fa-clock"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="{{this.viewsArray[2].selectorId}}" class="view disabled-visibility">
+    <p class="viewLabel">{{ this.viewsArray[2].title | translate }}</p>
+    <div class="view-container">
+      <div class="settings-container">
+        <div class="col-auto">
+          <div>
+            <label>What type of activity will Maize be used for?</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['businessType']">
+              <option *ngFor="let companyType of companyTypes" [ngValue]="companyType.value">{{companyType.key| translate }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="viewIcon">
+        <i class="fa-solid fa-city"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="{{this.viewsArray[3].selectorId}}" class="view disabled-visibility">
+    <p class="viewLabel">{{ this.viewsArray[3].title | translate }}</p>
+    <div class="view-container">
+      <div class="settings-container">
+        <div class="col-auto">
+          <div>
+            <label>Which is your preferred theme?</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['theme']">
+              <option *ngFor="let theme of themes" [ngValue]="theme.value">{{theme.key | translate }}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div>
+            <label>Which is your preferred font size?</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['fontSize']">
+              <option *ngFor="let fontsize of fontSizes" [ngValue]="fontsize.value">{{fontsize.key | translate }}</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <div class="viewIcon">
+        <i class="fa-solid fa-palette"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="{{this.viewsArray[4].selectorId}}" class="view disabled-visibility">
+    <p class="viewLabel">{{ this.viewsArray[4].title | translate }}</p>
+    <div class="view-container">
+      <div class="settings-container">
+        <div class="col-auto">
+          <div>
+            <label>Enable notification sound</label>
+          </div>
+          <div class="setting-group">
+            <minion-eye-toggle
+              (valueChangedEvent)="toggleChanged($event)"
+              [value]="views[currentStep]['notification_sound']"
+              toggleId="notification_sound"
+            ></minion-eye-toggle>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div>
+            <label>Enable alert sound</label>
+          </div>
+          <div class="setting-group">
+            <minion-eye-toggle
+              (valueChangedEvent)="toggleChanged($event)"
+              [value]="views[currentStep]['notification_alerts']"
+              toggleId="notification_alerts"
+            ></minion-eye-toggle>
+          </div>
+        </div>
+      </div>
+      <div class="viewIcon">
+        <i class="fa-solid fa-comment-dots"></i>
+      </div>
+    </div>
+  </div>
+
+  <div id="{{this.viewsArray[5].selectorId}}" class="view disabled-visibility">
+    <p class="viewLabel">{{ this.viewsArray[5].title | translate }}</p>
+    <div class="view-container">
+      <div class="settings-container">
+        <div class="col-auto">
+          <div>
+            <label>Lock the screen to protect your data</label>
+          </div>
+          <div class="setting-group">
+            <minion-eye-toggle
+              (valueChangedEvent)="toggleChanged($event)"
+              [value]="views[currentStep]['lock_screen']"
+              toggleId="lock_screen"
+            ></minion-eye-toggle>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div>
+            <label>Lock Screen Timeout (Minutes)</label>
+          </div>
+          <div class="setting-group">
+            <select [(ngModel)]="views[currentStep]['lock_screen_timeout']">
+              <option *ngFor="let timeout of lockScreenTimeouts" [ngValue]="timeout.value">{{timeout.key}}</option>
+            </select>
+          </div>
+        </div>
+        <div class="col-auto">
+          <div>
+            <label>Security Pin</label>
+          </div>
+          <div class="setting-group">
+            <input type="text" [(ngModel)]="views[currentStep]['pin']">
+          </div>
+        </div>
+      </div>
+      <div class="viewIcon">
+        <i class="fa-solid fa-user-secret"></i>
+      </div>
+    </div>
+  </div>
+
+  <div class="view-actions">
+    <button *ngIf="currentStep > 0" (click)="previousStep()" class="secondary-button">Back</button>
+    <button (click)="nextStep()" class="primary-button" [innerText]="proceedText"></button>
+  </div>
+  <div id="setup_steps">
+    <app-vertical-step-progress-bar
+      #progressBar
+      [steps]="this.steps">
+    </app-vertical-step-progress-bar>
+  </div>
+</div>
+<app-star-background-animation></app-star-background-animation>

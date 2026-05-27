@@ -1,0 +1,11 @@
+<form class="text-center" #pinInputForm="ngForm">
+    <p *ngIf="title" class="fs-1">{{title}}</p>
+    <p *ngIf="description">{{description}}</p>
+    <input *ngFor="let input of [].constructor(inputCount) let i = index"
+        class="rounded-4 m-1 border-0 text-center fs-1 bg-white pin-box" 
+        name="input{{ i }}"
+        required
+        ngModel
+        (input)="onInput(pinInputForm)"
+    >
+</form>

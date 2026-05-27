@@ -1,0 +1,128 @@
+<div class="container-fluid p-4 bg-transparent g-0 h-100 d-inline-block">
+    <div backgroundTheme theme class="row col-md-12 shadow-sm g-0 h-100 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div class="col-md-12">
+                <span>{{pageTitle | translate}}</span>
+                <hr>
+                <form
+                    [formGroup]="clientForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row py-2">
+                        <label class="form-label">Client Details</label>
+                        <div class="col-md-4">
+                            <div class="col-md-12">                            
+                                <div class="form-floating">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Firstname"
+                                        placeholder="Firstname" 
+                                        autocomplete="off" 
+                                        name="Firstname" 
+                                        formControlName="firstname">
+                                    <label>First Name</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="form-floating">
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Lastname" 
+                                        placeholder="Lastname" 
+                                        autocomplete="off" 
+                                        name="Lastname" 
+                                        formControlName="lastname">
+                                    <label>Last Name</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <label class="form-label">Contact Details</label>
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-at"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Email" 
+                                        placeholder="Email" 
+                                        aria-label="Email" 
+                                        aria-describedby="basic-addon1" 
+                                        name="Email" 
+                                        formControlName="email">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-6">
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-mobile-screen-button"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Mobile_Phone" 
+                                        placeholder="Mobile" 
+                                        aria-label="Mobile Phone" 
+                                        aria-describedby="basic-addon1" 
+                                        name="Mobile_Phone" 
+                                        formControlName="mobile_phone">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row py-2">
+                        <div class="col-md-4">
+                            <div class="col-md-12">
+                                <label class="form-label">Date of birth</label>
+                                <div class="input-group">
+                                    <datepicker
+                                        icon="fa-solid fa-cake-candles"
+                                        [control]="clientForm.get('birth_date')"
+                                    ></datepicker>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="col-md-6">
+                                <label class="form-label">Tax Id</label>
+                                <div class="input-group">
+                                    <span class="input-group-text"><i class="fa-solid fa-stamp"></i></span>
+                                    <input 
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Tax_Id" 
+                                        placeholder="Tax Id"  
+                                        name="Tax_Id" 
+                                        formControlName="tax_id">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="col-md-12">
+                        <button *ngIf="!client" class="btn btn-primary" type="submit" [disabled]="!clientForm.valid">Create</button>
+                        <button *ngIf="client" class="btn btn-primary" type="submit" [disabled]="!clientForm.valid">Save</button>
+                        <button *ngIf="client" class="btn btn-danger ms-2" type="button" data-bs-toggle="modal" data-bs-target="#DeleteClientModal">Delete</button>
+                        <button *ngIf="client" class="btn btn-secondary ms-2" type="button" (click)="backAction()">Back</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<modal
+    type="confirmation"
+    modalId="DeleteClientModal"
+    modalTitle="Delete Client"
+    modalBody="Are you sure you want to delete this client?"
+    cancelClass="btn-secondary"
+    cancelText="Cancel"
+    confirmClass="btn-danger"
+    confirmText="Delete"
+    (confirmEvent)="deleteClient()">
+</modal>

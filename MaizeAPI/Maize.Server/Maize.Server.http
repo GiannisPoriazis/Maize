@@ -1,0 +1,6 @@
+@Maize.Server_HostAddress = http://localhost:5081
+
+GET {{Maize.Server_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

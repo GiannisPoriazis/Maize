@@ -1,0 +1,15 @@
+.module-container {
+    width: 350px;
+}
+
+.module {
+    height: 200px;
+}
+
+.card-text {
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
+    overflow: hidden;
+}

@@ -1,0 +1,84 @@
+<div class="row-content">
+  <img id="logo" src="assets/images/logo.png" />
+  <p id="formLabel" [innerText]="sectionHeader"></p>
+  <form id="signInForm" (ngSubmit)="signIn()" #signInForm="ngForm">
+    <div class="col-auto user-group">
+      <label for="username_input">Username or email address</label>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa-solid fa-user-tie"></i></div>
+        </div>
+        <input type="text" class="form-control" id="username_input" autocomplete="off" name="username_input" placeholder="Type your username" ngModel required>
+      </div>
+    </div>
+
+    <div class="col-auto pass-group">
+      <div>
+        <label for="password_input">Password</label>
+        <a (click)="forgotPassword()">Forgot password?</a>
+      </div>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa-solid fa-unlock"></i></div>
+        </div>
+        <input type="password" class="form-control" id="password_input" name="password_input" placeholder="Type your password" ngModel required>
+      </div>
+    </div>
+
+    <button class="btn btn-primary d-flex flex-row justify-content-center align-items-center" type="submit" [disabled]="!signInForm.valid || connecting">
+      <span *ngIf="connecting" class="spinner-border spinner-border-sm" aria-hidden="true"></span>
+      <span *ngIf="connecting" class="px-2" role="status">Connecting...</span>
+      <span *ngIf="!connecting">Sign in with Maize</span>
+    </button>
+    <p>More options</p>
+    <div class="fb-login-button" data-width="240" data-size="medium" data-button-type="" data-layout="" data-auto-logout-link="false" data-use-continue-as="true"></div>
+    <div class="line-decoration-container">
+      <div class="line-decoration"></div>
+      <span>or</span>
+      <div class="line-decoration"></div>
+    </div>
+    <div id="g_id_onload"
+      data-client_id="YOUR_GOOGLE_CLIENT_ID"
+      data-login_uri="https://your.domain/your_login_endpoint"
+      data-auto_prompt="false">
+    </div>
+    <div class="g_id_signin"
+      data-type="standard"
+      data-size="large"
+      data-theme="filled_black"
+      data-text="sign_in_with"
+      data-shape="rectangular"
+      data-logo_alignment="left"
+      data-locale="en-US"
+      data-width="240">
+    </div>
+    <br />
+    <a href="#" target="_blank">Terms of service</a>
+  </form>
+
+  <form id="passwordResetForm" class="disabled-visibility">
+    <div class="col-auto">
+      <div>
+        <label for="request_password_token_input">Enter your email address and we will send you a password reset link.</label>
+      </div>
+      <div class="input-group mb-2">
+        <div class="input-group-prepend">
+          <div class="input-group-text"><i class="fa-solid fa-envelope"></i></div>
+        </div>
+        <input [(ngModel)]="emailInput" type="text" class="form-control" autocomplete="off" id="request_password_token_input" name="request_password_token_input" placeholder="Type your email address">
+      </div>
+    </div>
+
+    <button class="btn btn-primary" (click)="requestPasswordReset()">Request password reset</button>
+
+    <div class="line-decoration-container">
+      <div class="line-decoration"></div>
+      <span>or</span>
+      <div class="line-decoration"></div>
+    </div>
+
+    <button (click)="enableSignInSection()" class="btn btn-secondary">Back to sign in</button>
+  </form>
+</div>
+<app-footer class="footer"></app-footer>
+<app-background-animation></app-background-animation>

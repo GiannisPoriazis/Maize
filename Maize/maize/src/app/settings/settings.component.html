@@ -1,0 +1,291 @@
+<div class="container-fluid p-4 bg-transparent g-0 d-inline-block">
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div theme class="col-md-12">
+                <span>{{ 'settings_title' | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4 col-md-12 g-0">
+        <div class="col-md-3 shadow-sm g-0 me-4">
+            <div class="d-flex flex-row align-items-start">
+                <div class="list-group list-group-flush col-md-12">
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action z-0" [class.active]="activeTab === 0" (click)="switchTab(0)">
+                        <h6 class="mb-1">{{ 'settings_localization' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'settings_language_and_timezone' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action z-0" [class.active]="activeTab === 1" (click)="switchTab(1)">
+                        <h6 class="mb-1">{{ 'settings_customization' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'settings_theme_preferences' | translate }}</p>
+                    </button>
+                    <button *ngIf="isAdmin" type="button" listGroupItemTheme class="list-group-item list-group-item-action z-0" [class.active]="activeTab === 2" (click)="switchTab(2)">
+                        <h6 class="mb-1">{{ 'settings_orientation' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'settings_business_settings' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 3" (click)="switchTab(3)">
+                        <h6 class="mb-1">{{ 'settings_notifications' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'settings_notification_preferences' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 4" (click)="switchTab(4)">
+                        <h6 class="mb-1">{{ 'settings_security' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'settings_protection_and_security' | translate }}</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 0" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'settings_localization' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                [formGroup]="localizationForm"
+                (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4">    
+                            <label for="Language" class="form-label">{{ 'settings_language' | translate }}</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-earth-europe"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="Language" 
+                                    name="Language"
+                                    formControlName="language">
+                                    <option *ngFor="let language of languages" [ngValue]="language">{{language | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">                            
+                            <label for="Language" class="form-label">{{ 'settings_timezone' | translate }}</label>    
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-clock"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="Timezone" 
+                                    name="Timezone"
+                                    formControlName="timezone">
+                                    <option *ngFor="let timezone of timezones" [ngValue]="timezone.value">{{timezone.key | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 1" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'settings_theme_preferences' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="customizationForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4">    
+                            <label for="Language" class="form-label">Platform Theme</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-palette"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="Theme" 
+                                    name="Theme"
+                                    formControlName="theme">
+                                    <option *ngFor="let theme of themes" [ngValue]="theme.value">{{theme.key | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-4">    
+                            <label for="Language" class="form-label">Grid Theme</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-table-cells"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="FontSize" 
+                                    name="FontSize"
+                                    formControlName="grid_theme">
+                                    <option *ngFor="let gridTheme of gridThemes" [ngValue]="gridTheme.value">{{gridTheme.key | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">    
+                            <label for="Language" class="form-label">{{ 'settings_grid_theme' | translate }}</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-font"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="FontSize" 
+                                    name="FontSize"
+                                    formControlName="fontsize">
+                                    <option *ngFor="let fontsize of fontSizes" [ngValue]="fontsize.value">{{fontsize.key | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 2" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'settings_business_settings' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="orientationForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row">
+                        <div class="col-md-4">    
+                            <label for="Language" class="form-label">{{ 'settings_company_type' | translate }}</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-building"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    id="CompanyType" 
+                                    name="CompanyType"
+                                    formControlName="company_type">
+                                    <option *ngFor="let companyType of companyTypes" [ngValue]="companyType.value">{{companyType.key| translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 3" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'settings_notification_preferences' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="notificationsForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4"> 
+                            <label for="NotificationSound" class="form-label">{{ 'settings_notifications' | translate }}</label>                           
+                            <div class="form-check form-switch">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    role="switch" 
+                                    id="NotificationSound" 
+                                    name="NotificationSound" 
+                                    formControlName="notification_sound"
+                                    checked>
+                                <label class="form-check-label" for="NotificationSound">{{ 'settings_enable_notification_sound' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4"> 
+                            <label for="NotificationAlert" class="form-label">{{ 'settings_alerts' | translate }}</label>                           
+                            <div class="form-check form-switch">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    role="switch" 
+                                    id="NotificationAlert" 
+                                    name="NotificationAlert" 
+                                    formControlName="notification_alerts"
+                                    checked>
+                                <label class="form-check-label" for="NotificationAlert">{{ 'settings_enable_alert_sound' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 4" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'settings_protection_and_security' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="securityForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4"> 
+                            <div class="form-check form-switch">
+                                <input 
+                                    class="form-check-input" 
+                                    type="checkbox" 
+                                    role="switch" 
+                                    id="LockScreen" 
+                                    name="LockScreen" 
+                                    formControlName="lock_screen"
+                                    checked>
+                                <label class="form-check-label" for="LockScreen">{{ 'settings_lock_screen_to_protect_your_data' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mb-3">
+                        <div class="col-md-4">  
+                            <label for="LockScreenTimeout" class="form-label">{{ 'settings_lock_screen_timeout' | translate }}</label>   
+                            <div class="input-group">
+                                <label class="input-group-text" for="LockScreenTimeout"><i class="fa-solid fa-stopwatch"></i></label>
+                                <select 
+                                    class="form-select" 
+                                    id="LockScreenTimeout"
+                                    name="LockScreenTimeout"
+                                    formControlName="lock_screen_timeout">
+                                    <option *ngFor="let timeout of lockScreenTimeouts" [ngValue]="timeout.value">{{timeout.key}}</option>
+                                </select>
+                                <label class="input-group-text" for="LockScreenTimeout">{{ 'general_minutes' | translate }}</label>
+                            </div>                          
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">  
+                            <label for="Pin" class="form-label">PIN</label>                             
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-key"></i></span>
+                                <ng-container *ngIf="!showSecurityPin">
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        id="Pin" 
+                                        placeholder="PIN" 
+                                        aria-label="Pin" 
+                                        name="Pin"
+                                        formControlName="pin">
+                                </ng-container>
+                                <ng-container *ngIf="showSecurityPin">
+                                    <input
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Pin" 
+                                        placeholder="PIN" 
+                                        aria-label="Pin" 
+                                        name="Pin"
+                                        formControlName="pin">
+                                </ng-container>
+                                <button *ngIf="!showSecurityPin" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePinVisibility()"><i class="fa-solid fa-eye-slash"></i></button> 
+                                <button *ngIf="showSecurityPin" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePinVisibility()"><i class="fa-solid fa-eye"></i></button>
+                            </div>
+                            <span [hidden]="securityForm.controls['pin'].valid">{{ 'settings_pin_character_range' | translate }}</span>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-3">
+            <div class="col-md-12">
+              <button type="submit"
+                      class="btn btn-success"
+                      (click)="onSubmit()"
+                      [disabled]="!localizationForm.valid || !customizationForm.valid || !orientationForm.valid || !notificationsForm.valid || !securityForm.valid || (localizationForm.pristine && customizationForm.pristine && orientationForm.pristine && notificationsForm.pristine && securityForm.pristine)">
+                      {{ 'general_update_button' | translate }}
+              </button>
+            </div>
+        </div>
+    </div>
+</div>

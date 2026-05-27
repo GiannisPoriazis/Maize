@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Maize</title>
+  <base href="/">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="icon" type="image/x-icon" href="assets/images/logo.png">
+  <link href="assets/fontawesome/css/fontawesome.css" rel="stylesheet">
+  <link href="assets/fontawesome/css/brands.css" rel="stylesheet">
+  <link href="assets/fontawesome/css/solid.css" rel="stylesheet">
+  <link href="assets/fontawesome/css/regular.css" rel="stylesheet">
+</head>
+<body>
+  <script>
+    window.fbAsyncInit = function () {
+      FB.init({
+        appId: '626785518425316',
+        xfbml: true,
+        version: 'v19.0'
+      });
+    };
+  </script>
+  <script async defer crossorigin="anonymous" src="https://connect.facebook.net/en_US/sdk.js"></script>
+  <script src="https://accounts.google.com/gsi/client?hl=en-US" async></script>
+  <script async
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARyoDDqA-USw_iC8yhWY8WwnyaD0ZdZ1g&loading=async&libraries=places">
+  </script>
+  <script>
+    document.addEventListener('click', function(event) {
+      var collapseProfileMenu = document.getElementById('profileCollapse');
+      var collapseLanguageMenu = document.getElementById('languageCollapse');
+      var collapseNotificationMenu = document.getElementById('notificationsCollapse');
+      var collapseSearchResults = document.getElementById('searchResultsCollapse');
+      var target = event.target;
+      
+      if (collapseProfileMenu && !collapseProfileMenu.contains(target) && target !== collapseProfileMenu) {
+        collapseProfileMenu.classList.remove('show');
+      }
+
+      if (collapseLanguageMenu && !collapseLanguageMenu.contains(target) && target !== collapseLanguageMenu) {
+        collapseLanguageMenu.classList.remove('show');
+      }
+
+      if (collapseNotificationMenu && !collapseNotificationMenu.contains(target) && target !== collapseNotificationMenu) {
+        collapseNotificationMenu.classList.remove('show');
+      }
+
+      if (collapseSearchResults) {
+        collapseSearchResults.classList.remove('show');
+      }
+    });
+  </script>
+  <app-root></app-root>
+</body>
+</html>

@@ -1,0 +1,201 @@
+<div class="container-fluid p-4 bg-transparent g-0 d-inline-block">
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-4">
+            <div theme class="col-md-12">
+                <span>{{ 'profile_title' | translate }}</span>
+            </div>
+        </div>
+    </div>
+    <div class="row mb-4 col-md-12 g-0">
+        <div class="col-md-3 bg-white shadow-sm g-0 me-4">
+            <div class="d-flex flex-row align-items-start">
+                <div class="list-group list-group-flush col-md-12">
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 0" (click)="switchTab(0)">
+                        <h6 class="mb-1">{{ 'profile_personal_details' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'profile_update_details' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 1" (click)="switchTab(1)">
+                        <h6 class="mb-1">{{ 'profile_contact_details' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'profile_set_contact_details' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 2" (click)="switchTab(2)">
+                        <h6 class="mb-1">{{ 'profile_account_credentials' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'profile_manage_account_credentials' | translate }}</p>
+                    </button>
+                    <button type="button" listGroupItemTheme class="list-group-item list-group-item-action list-group-item-light z-0" [class.active]="activeTab === 3" (click)="switchTab(3)">
+                        <h6 class="mb-1">{{ 'profile_roles_and_permissions' | translate }}</h6>
+                        <p class="mb-1 fw-lighter">{{ 'profile_configure_account_role' | translate }}</p>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 0" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'profile_user_details' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                [formGroup]="userDetailsForm"
+                (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4">                            
+                            <div class="form-floating">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="Firstname"
+                                    placeholder="Firstname" 
+                                    autocomplete="off" 
+                                    name="Firstname"
+                                    formControlName="firstname">
+                                <label>{{ 'profile_first_name' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">                            
+                            <div class="form-floating">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="Lastname"
+                                    placeholder="Lastname" 
+                                    autocomplete="off" 
+                                    name="Lastname"
+                                    formControlName="lastname">
+                                <label>{{ 'profile_last_name' | translate }}</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 1" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'profile_contact_details' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="contactDetailsForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4">                            
+                            <div class="form-floating">
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="Email"
+                                    placeholder="Email" 
+                                    autocomplete="off" 
+                                    name="Email"
+                                    formControlName="email">
+                                <label>E-mail</label>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 2" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                    <label class="form-label">{{ 'profile_account_details' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="accountCredentialsForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4"> 
+                            <label for="Username" class="form-label">{{ 'profile_username' | translate }}</label>                           
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-user"></i></span>
+                                <input 
+                                    type="text" 
+                                    class="form-control" 
+                                    id="Username" 
+                                    placeholder="{{ 'profile_username_placeholder' | translate }}" 
+                                    aria-label="Username" 
+                                    name="Username"
+                                    formControlName="username">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">  
+                            <label for="Password" class="form-label">{{ 'profile_password' | translate }}</label>                             
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-regular fa-id-badge"></i></span>
+                                <ng-container *ngIf="!showPassword">
+                                    <input 
+                                        type="password" 
+                                        class="form-control" 
+                                        id="Password" 
+                                        placeholder="{{ 'profile_password' | translate }}" 
+                                        aria-label="Password" 
+                                        name="Password"
+                                        formControlName="password">
+                                </ng-container>
+                                <ng-container *ngIf="showPassword">
+                                    <input
+                                        type="text" 
+                                        class="form-control" 
+                                        id="Password" 
+                                        placeholder="{{ 'profile_password' | translate }}" 
+                                        aria-label="Password" 
+                                        name="Password"
+                                        formControlName="password">
+                                </ng-container>
+                                <button *ngIf="!showPassword" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePasswordVisibility()"><i class="fa-solid fa-eye-slash"></i></button> 
+                                <button *ngIf="showPassword" style="width: 45px;" type="button" class="btn btn-secondary" (click)="togglePasswordVisibility()"><i class="fa-solid fa-eye"></i></button> 
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div *ngIf="activeTab === 3" backgroundTheme theme class="col shadow-sm g-0">
+            <div class="col-md-12 flex-row align-items-start p-4">
+                <div class="row">
+                  <label class="form-label">{{ 'profile_roles_and_permissions' | translate }}</label>
+                    <hr>
+                </div>
+                <form
+                    [formGroup]="userRolesForm"
+                    (ngSubmit)="onSubmit()">
+                    <div class="row mb-3">
+                        <div class="col-md-4">    
+                            <label for="basic-url" class="form-label">{{ 'profile_role' | translate }}</label>                        
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="fa-solid fa-fingerprint"></i></span>
+                                <select 
+                                    class="form-select" 
+                                    aria-label="Default select example" 
+                                    id="Role" 
+                                    name="Role"
+                                    formControlName="role">
+                                    <option *ngFor="let role of userRoles" [ngValue]="role.id">{{role.name | translate }}</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div backgroundTheme class="row mb-4 col-md-12 shadow-sm g-0 d-inline-block">
+        <div class="d-flex flex-row align-items-start p-3">
+            <div class="col-md-12">
+                <button 
+                    type="submit" 
+                    class="btn btn-success" 
+                    (click)="onSubmit()"
+                    [disabled]="!userDetailsForm.valid || !contactDetailsForm.valid || !accountCredentialsForm.valid || !userRolesForm.valid || (userDetailsForm.pristine && contactDetailsForm.pristine && accountCredentialsForm.pristine && userRolesForm.pristine)">
+                    {{ 'general_update_button' | translate }}
+                </button>
+            </div>
+        </div>
+    </div>
+</div>

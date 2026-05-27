@@ -1,0 +1,14 @@
+<ag-grid-angular
+    gridTheme
+    style="height: 500px;"
+    [rowData]="rowData"
+    [columnDefs]="colDefs"
+    [tooltipShowDelay]="500"
+    (gridReady)="onGridReady($event)"
+    (modelUpdated)="onModelUpdated()"
+    [noRowsOverlayComponent]="noRowsOverlayComponent"
+    [rowSelection]="rowSelection"
+    (rowDoubleClicked)="rowDoubleClicked($event)"
+    (rowClicked)="rowClicked($event)"
+    [pagination]="true">
+</ag-grid-angular>

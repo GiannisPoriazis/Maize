@@ -1,0 +1,127 @@
+@import 'variables.scss';
+@import 'animations.scss';
+@import 'primeng_custom.scss';
+@import 'ag-grid-community/styles/ag-grid.css';
+@import 'ag-grid-community/styles/ag-theme-quartz.css';
+@import 'ag-grid-community/styles/ag-theme-balham.css';
+@import "node_modules/quill/dist/quill.core.css";
+@import "node_modules/quill/dist/quill.snow.css";
+@import "primeicons/primeicons.css";
+
+body {
+  background-color: lightgray;
+  font-family: $main-font;
+  margin: 0;
+  padding: 0;
+}
+
+.hidden-animated {
+  animation: fadeout 0.5s forwards !important;
+}
+
+.disabled-visibility {
+  display: none !important;
+}
+
+a {
+  cursor: pointer;
+}
+
+.notification-container {
+  display: flex;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 9999;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  justify-content: flex-end;
+  align-items: flex-end;
+  flex-direction: column;
+
+  p.notification-message {
+    margin: 0;
+    line-height: 20px;
+  }
+
+  i.notification-icon {
+    margin-right: 10px;
+    line-height: 20px;
+  }
+}
+
+.nav-menu-open {
+  width: 330px;
+}
+
+.nav-menu-closed {
+  width: 110px;
+}
+
+input.ng-invalid.ng-touched, textarea.ng-invalid.ng-touched {
+  border: 1px solid red;
+}
+
+.list-group-item-hover:hover, .list-group-item-hover .popover-header {
+  transition: none;
+  background-color: lighten(#212529, 10%) !important;
+  color: white;
+}
+
+.list-group-item-hover:hover > span, .list-group-item-hover:hover button span {
+  transition: none;
+  background-color: transparent !important;
+  color: white;
+}
+
+.list-group-item-hover:hover button {
+  transition: none;
+  background: transparent !important;
+  color: white;
+}
+
+.popover-body {
+  min-width: 250px !important;
+}
+
+.outline-danger {
+  outline: red;
+}
+
+a.fc-col-header-cell-cushion {
+  text-decoration: none;
+  color: unset;
+  cursor: unset;
+}
+
+.fc .fc-daygrid-day-number {
+  text-decoration: none;
+  color: unset;
+  cursor: unset;
+}
+
+.list-group-item-hover .popover {
+  z-index: 10 !important;
+}
+
+p-toolbar.text-bg-dark.bg-dark > div[role="toolbar"] {
+  background: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+  border: 0;
+}
+
+p-dataview.bg-dark div.p-dataview-content, p-dataview.bg-dark div.p-dataview-content fieldset {
+  background: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+p-dataview.bg-dark div.p-dataview-content fieldset legend, p-fieldset.bg-dark fieldset legend {
+  color: white;
+}
+
+p-fieldset.fieldset-link {
+  cursor: pointer;
+}
+
+.color-lightgray {
+  color: lightgray;
+}

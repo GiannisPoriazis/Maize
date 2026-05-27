@@ -1,0 +1,8 @@
+<div class="container-fluid p-0 h-100 z-3 text-bg-dark fixed-top bg-opacity-75 d-flex justify-content-center align-items-center">
+    <app-pin-input
+        title="Locked"
+        description="Enter your security pin to unlock the application."
+        [inputCount]="4"
+        (pinSubmited)="submitPin($event)"
+    ></app-pin-input>
+</div>

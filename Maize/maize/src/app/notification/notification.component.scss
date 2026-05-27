@@ -1,0 +1,58 @@
+@import '../../assets/styles/variables.scss';
+@import '../../assets/styles/animations.scss';
+
+.bottom-0 {
+  width: 325px;
+  border-radius: 0.25rem;
+  box-shadow: 0 4px 6px -1px rgba(0,0,0,.1), 0 2px 4px -1px rgba(0,0,0,.06);
+  color: white;
+  display: flex;
+  font-size: .875rem;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  margin-bottom: 30px;
+  margin-right: 30px;
+  font-size: .875rem;
+  font-weight: 600;
+  box-sizing: border-box;
+  pointer-events: auto;
+  opacity: 0;
+  animation: fadeInOut 4s ease-in forwards;
+
+  .p-10 {
+    width: 100%;
+  }
+}
+
+span.flex {
+  display: flex;
+  justify-content: space-between;
+}
+
+.bg-green-500 {
+  background-color: $notification-success-color;
+}
+
+.bg-blue-500 {
+  background-color: $notification-info-color;
+}
+
+.bg-yellow-500 {
+  background-color: $notification-warning-color;
+}
+
+.bg-red-500 {
+  background-color: $notification-error-color;
+}
+
+button {
+  background: transparent;
+  border: none;
+  color: inherit;
+  cursor: pointer;
+}
+
+.items-center {
+  display: flex;
+  justify-content: space-between;
+}

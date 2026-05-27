@@ -1,0 +1,63 @@
+# Node.js with Angular
+# Build a Node.js project that uses Angular.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- master
+
+pool:
+  vmImage: ubuntu-latest
+
+stages:
+- stage: Build
+  displayName: Build stage
+  jobs:  
+  - job: Build
+    displayName: Build
+    steps:
+    - task: UseNode@1
+      inputs:
+        version: '18.x'
+      displayName: 'Install Node.js'
+    - script: |
+        cd maize
+        npm install -g @angular/cli
+        npm install
+        ng build --configuration=production --base-href /
+      displayName: 'npm install and build'
+    - task: ArchiveFiles@2
+      displayName: 'Archive files'
+      inputs:
+        rootFolderOrFile: 'maize/dist/maize'
+        includeRootFolder: false
+        archiveType: zip
+        archiveFile: '$(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip'
+        replaceExistingArchive: true
+    - publish: $(Build.ArtifactStagingDirectory)/$(Build.BuildId).zip
+      artifact: drop
+    # Deploy Stage
+- stage: Deploy
+  displayName: Deploy stage
+  dependsOn: Build
+  jobs:
+  - job: Deploy
+    displayName: Deploy
+    steps:
+    - download: current
+      artifact: drop
+      displayName: 'Download Build Artifact'
+    - task: AzureWebApp@1
+      inputs:
+        azureSubscription: 'Azure subscription 1(0d258a04-facb-4bd2-a95f-8797ca52d660)'
+        appType: 'webApp'
+        appName: 'maize'
+        package: '$(Pipeline.Workspace)/drop/$(Build.BuildId).zip'
+        appSettings: |
+          -WEBSITE_NODE_DEFAULT_VERSION=14
+          -SCM_DO_BUILD_DURING_DEPLOYMENT=true
+        configurationStrings: |
+          -WEBSITE_WEBDEPLOY_USE_SCM=true
+          -WEBSITE_NODE_DEFAULT_VERSION=14
+          -GENERATE_WEB_CONFIG=true
+        deploymentMethod: 'zipDeploy'

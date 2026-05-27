@@ -1,0 +1,52 @@
+<a *ngIf="!subMenu && validPermission(permission) && validCompanyType()" [routerLink]="[link]" [ngClass]="{'justify-content-center': !menuOpen, 'justify-content-between': menuOpen}" class="px-4 py-2 d-flex list-group-item list-group-item-action border-0 bg-transparent">
+    <span 
+        [ngClass]="{'me-3': menuOpen}" 
+        badgeTheme
+        class="d-flex justify-content-center align-items-center badge text-bg-light shadow-sm menu-icon">
+        <i class="{{iconClass}} p-2"></i>
+    </span>
+    <span *ngIf="menuOpen" theme class="fw-semibold nav-menu-hidden d-inline-flex flex-column flex-grow-1">
+        <span>{{title}}</span>
+        <span class="fw-normal menu-link-description">{{description | translate }}</span>
+    </span>
+</a>
+<a *ngIf="subMenu && validPermission(permission) && hasOptions() && validCompanyType()" id="{{subMenuId}}toggler" (click)="openMenu(); collapseOthers('{{subMenuId}}');" [ngClass]="{'justify-content-center': !menuOpen, 'justify-content-between': menuOpen}" class="px-4 py-2 d-flex list-group-item list-group-item-action border-0 bg-transparent" data-bs-toggle="collapse" href="#{{subMenuId}}" role="button" aria-expanded="false">
+    <span 
+        [ngClass]="{'me-3': menuOpen}" 
+        badgeTheme
+        class="d-flex justify-content-center align-items-center badge text-bg-light shadow-sm menu-icon">
+        <i class="{{iconClass}} p-2"></i>
+    </span>
+    <span *ngIf="menuOpen" theme class="fw-semibold nav-menu-hidden d-inline-flex flex-column flex-grow-1">
+        <span>{{title}}</span>
+        <span class="fw-normal menu-link-description">{{description | translate }}</span>
+    </span>
+    <button *ngIf="menuOpen" theme class="btn float-end border-0 nav-menu-hidden" type="button">
+        <i class="fa-solid fa-angle-down"></i>
+    </button>
+</a>
+<div *ngIf="subMenu && menuOpen" class="list-group collapse nav-menu-collapse" id="{{subMenuId}}">
+    <hr theme class="my-0 border-0" style="box-shadow: 2px 2px 0px 3px gray">
+    <span *ngFor="let option of subMenu" class="list-group-item-hover">
+        <a *ngIf="option.link && validPermission(option.permission)" [routerLink]="[option.link]" class="px-4 py-3 list-group-item list-group-item-action border-0 bg-transparent list-group-item-hover">
+            <span theme>{{option.title}}</span>
+        </a>
+        <button 
+            *ngIf="!option.link && validPermission(option.permission) && hasPopoverOptions(option.popoverMenu!)"
+            class="px-4 py-3 list-group-item list-group-item-action border-0 bg-transparent popover-menu-item d-flex justify-content-between align-items-center" 
+            [ngbPopover]="popoverContent"
+            [popoverTitle]="option.title">
+            <span theme>{{option.title}}</span>
+            <button theme class="py-0 btn float-end border-0" type="button">
+                <i class="fa-solid fa-angle-right"></i>
+            </button>
+        </button>
+        <ng-template #popoverContent>
+            <a *ngFor="let popoverItem of option.popoverMenu" [hidden]="!validPermission(popoverItem.permission)" [routerLink]="[popoverItem.link]" class="py-3 list-group-item list-group-item-action border-0 bg-transparent list-group-item-hover">
+                <span theme class="fs-6 bg-transparent">{{popoverItem.title}}</span>
+            </a>
+        </ng-template>
+    </span>
+</div>
+<hr theme *ngIf="menuOpen" class="m-0">
+<hr theme *ngIf="menuOpen" class="m-0">

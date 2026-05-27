@@ -1,0 +1,34 @@
+<div backgroundTheme class="container-fluid p-0 h-100">
+    <div class="d-flex flex-row align-items-start shadow-sm px-0 h-100">
+        <div class="col-md-12 h-100 d-flex flex-column">
+            <div class="row g-0">
+                <div class="list-group">
+                    <a (click)="toggleMenu()" [ngClass]="{'justify-content-between': menuOpen, 'justify-content-center': !menuOpen}" class=" px-4 py-3 list-group-item list-group-item-action d-flex align-items-center justify-content-between border-0 bg-transparent">
+                        <img *ngIf="menuOpen" id="logo" src="assets/images/logo.png" />
+                        <button theme class="btn float-end border-0" type="button">
+                            <i class="fa-solid fa-bars"></i>
+                        </button>
+                    </a>
+                </div>
+            </div>
+            <hr theme class="m-0">
+            <div class="row g-0 mh-100 overflow-y-auto">
+                <div class="list-group">
+                    <app-nav-menu-item *ngFor="let menu of menuIndex"
+                        [title]="menu.title"
+                        [description]="menu.description"
+                        [iconClass]="menu.iconClass"
+                        [link]="menu['link']"
+                        [permission]="menu['permission']"
+                        [company_type]="menu['company_type']"
+                        [ct]="ct"
+                        [subMenu]="menu['subMenu']"
+                        [subMenuId]="menu['subMenuId']"
+                        [menuOpen]="menuOpen"
+                        (openMenuEvent)="toggleMenu()"
+                    ></app-nav-menu-item>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

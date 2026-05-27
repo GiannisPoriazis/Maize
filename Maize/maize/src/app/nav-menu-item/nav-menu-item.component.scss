@@ -1,0 +1,23 @@
+@import '../../assets/styles/variables.scss';
+
+.menu-icon {
+    width: 50px;
+    max-width: 50px;
+}
+
+i {
+    font-size: 1rem;
+}
+
+.nav-menu-hidden {
+    opacity: 0;
+    animation: nav-menu-fadein 0.60s ease-in forwards;
+}
+
+a.list-group-item {
+    transition: color 0.75s;
+}
+
+a.list-group-item:hover {
+    color: $success-text;
+}

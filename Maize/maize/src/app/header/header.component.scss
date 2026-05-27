@@ -1,0 +1,36 @@
+.user-welcome {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+input.text-bg-dark::placeholder {
+    color: white !important;
+}
+
+.list-group-item-action:hover {
+    transition: none;
+    background-color: lighten(#212529, 10%) !important;
+    color: white;
+}
+
+.row.align-items-center:hover {
+    transition: none;
+    background-color: lighten(#212529, 10%) !important;
+    color: white !important;
+}
+
+#notificationsCollapse {
+    min-width: 300px;
+    right: 0%;
+}
+
+#notificationsCollapse a span.announcement-date {
+    font-size: small;
+}
+
+.search_bar_item:hover {
+    background-color: lighten(#212529, 10%) !important;
+    color: white;
+    cursor: pointer;
+}

@@ -1,0 +1,95 @@
+<div class="container-fluid bg-transparent g-0 h-100 d-inline-block d-flex justify-content-center align-items-center">
+    <form [formGroup]="bookingForm">
+        <div class="row shadow-sm g-0 d-inline-block rounded-3">
+            <div class="p-4">
+                <div class="col-md-12 d-flex flex-row align-items-end justify-content-center">
+                    <div class="pr-2">
+                        <label class="form-label">Pickup Location</label>
+                        <select 
+                            class="form-select"
+                            formControlName="checkout">
+                            <option *ngFor="let station of stations" [ngValue]="station.id">{{station.station_name}}</option>
+                        </select>
+                    </div>
+                    <div class="px-2">
+                        <label class="form-label">Return Location</label>
+                        <select 
+                            class="form-select" 
+                            formControlName="checkin">
+                            <option *ngFor="let station of stations" [ngValue]="station.id">{{station.station_name}}</option>
+                        </select>
+                    </div>
+                    <div class="px-2">
+                        <label class="form-label">Check-out</label>
+                        <datepicker
+                            icon="fa-solid fa-calendar-days"
+                            [control]="bookingForm.get('date_from')"
+                        ></datepicker>
+                    </div>
+                    <div class="px-2">
+                        <ngb-timepicker [spinners]="false" />
+                    </div>
+                    <div class="px-2">
+                        <label class="form-label">Check-in</label>
+                        <datepicker
+                            icon="fa-solid fa-calendar-days"
+                            [control]="bookingForm.get('date_to')"
+                        ></datepicker>
+                    </div>
+                    <div class="px-2">
+                        <ngb-timepicker [spinners]="false" />
+                    </div>
+                    <div class="pl-2">
+                        <button 
+                            type="button" 
+                            (click)="calculateDates()"
+                            class="btn btn-primary">
+                            <i class="fa-solid fa-magnifying-glass"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div *ngIf="!!vehicles().length" class="p-4 pt-0">
+                <span class="text-secondary">Vehicles Found: {{vehicles().length}}</span>
+                <hr class="mt-2">
+                <div>
+                    <p-dataView #dv [value]="vehicles()" layout="list">
+                        <ng-template pTemplate="list" let-vehicles>
+                            <div class="grid grid-cols-12 grid-nogutter">
+                                <div class="col-md-12" *ngFor="let vehicle of vehicles; let first = first">
+                                    <div
+                                        class="flex flex-col sm:flex-row sm:items-center p-2 gap-4 align-items-center"
+                                        [ngClass]="{ 'border-top': !first }"
+                                        >
+                                        <div class="md:w-40 relative">
+                                            <div class="vehicle-placeholder" style="background: url('assets/images/car-placeholder.png')"></div>
+                                        </div>
+                                        <div class="flex flex-col md:flex-row justify-between md:items-center flex-1 gap-6 justify-content-between align-items-center">
+                                            <div class="flex flex-row md:flex-col justify-between items-start gap-2">
+                                                <div>
+                                                    <h3>{{ vehicle.model_description }}</h3>
+                                                    <span class="font-medium text-secondary text-lg">{{ appService.getEnumKeyByValue(appService.VehicleGears, vehicle.gears) | translate }}</span>
+                                                </div>
+                                            </div>
+                                            <div class="flex flex-col md:items-end flex-column text-end">
+                                                <h1 class="font-semibold text-surface-900 dark:text-surface-0">{{
+                                                    '€' + (bookingDays * vehicle.daily_rate).toFixed(2)
+                                                }}</h1>
+                                                <h5 class="font-semibold text-surface-900 dark:text-surface-0">{{
+                                                    '€ ' + vehicle.daily_rate.toFixed(2) + ' per day'
+                                                }}</h5>
+                                                <div class="flex flex-row-reverse md:flex-row mt-2">
+                                                    <button type="button" class="rounded-pill btn btn-primary text-lg">Select</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+                    </p-dataView>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

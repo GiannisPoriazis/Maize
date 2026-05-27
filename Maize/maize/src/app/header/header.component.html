@@ -1,0 +1,105 @@
+<div backgroundTheme class="container-fluid p-0">
+  <div class="d-flex flex-row align-items-center shadow-sm px-4">
+    <div class="col-md-6 p-2">
+      <div class="input-group">
+        <div class="input-group-prepend">
+          <span theme class="input-group-text border-0 bg-transparent d-flex flex-row align-items-center h-100 p-0" id="basic-addon1">
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </span>
+        </div>
+        <input theme type="text" class="form-control border-0 shadow-none bg-transparent" (input)="initSearch()" placeholder="{{ 'header_search_placeholder' | translate }}" aria-label="search_bar" aria-describedby="basic-addon1" #searchInput>
+        <div class="z-3 list-group collapse shadow-sm mt-3 position-absolute top-100" id="searchResultsCollapse" #searchResults>
+          <p-scroller
+          [items]="searchData" 
+          [itemSize]="50" 
+          scrollHeight="200px"
+          [autoSize]="true"
+          styleClass="border-1 surface-border" 
+          [style]="{'min-width': '500px', 'max-height': '200px', 'overflow': 'auto'}">
+            <ng-template pTemplate="item" let-item let-options="options">
+                <div 
+                  class="flex align-items-center p-2 search_bar_item" 
+                  [ngClass]="{ 'surface-ground': options.odd, 'bg-white': options.even }" 
+                  style="height: 50px;" 
+                  (click)="selectSearchItem(item)">
+                    {{ item.title }}
+                </div>
+            </ng-template>
+          </p-scroller>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6 p-2 d-flex flex-row justify-content-end">
+      <a class="col d-flex justify-content-end list-group-item" data-bs-toggle="collapse" href="#languageCollapse" role="button" aria-expanded="false">
+        <span theme>{{appSettings?.language | translate }}</span>
+        <span theme class="border-0 ps-2" type="button">
+          <i class="fa-solid fa-angle-down"></i>
+        </span>
+        <div class="z-3 list-group collapse shadow-sm mt-3 position-absolute top-100" id="languageCollapse">
+          <a *ngIf="appSettings?.language != 'EL'" class="px-4 py-3 list-group-item list-group-item-action border-0" (click)="changeLanguage('EL')">
+              <span class="fw-light">{{ 'EL' | translate }}</span>
+          </a>
+          <a *ngIf="appSettings?.language != 'EN'" class="px-4 py-3 list-group-item list-group-item-action border-0" (click)="changeLanguage('EN')">
+            <span class="fw-light">{{ 'EN' | translate }}</span>
+          </a>
+        </div>
+      </a> 
+      <div rulerTheme class="vr mx-4"></div>
+      <a class="col-md-auto d-flex justify-content-end list-group-item">
+        <span theme class="border-0 pe-4" data-bs-toggle="collapse" href="#notificationsCollapse" role="button" aria-expanded="false">
+          <i class="fa-regular fa-bell"></i>
+          <span *ngIf="!!announcements.length" class="position-absolute top-0 translate-middle badge rounded-pill bg-danger">
+            {{announcements.length}}
+          </span>
+          <div *ngIf="!!announcements.length" class="z-3 w-100 list-group collapse shadow-sm mt-3 position-absolute top-100" id="notificationsCollapse">
+            <span *ngFor="let announcement of announcements; index as i">
+              <a *ngIf="i <= 3" theme routerLink="company_announcements" [queryParams]="announcement" class="px-4 py-3 list-group-item list-group-item-action border-0 fw-light">
+                <span class="row align-items-center">
+                  <div class="col-md-2 fs-4">
+                    <i class="fa-solid fa-comments"></i>
+                  </div>
+                  <div class="col-md-8">
+                    <span class="fw-semibold announcement-date text-primary">{{announcement.created_at}}</span>
+                    <br>
+                    <span class="fw-normal">{{announcement.title}}</span>
+                  </div>
+                  <div class="col-md-2">
+                    <i class="fa-solid fa-angle-right"></i>
+                  </div>
+                </span>                            
+              </a>
+              <hr *ngIf="i < announcements.length-1 && i <= 3" class="p-0 m-0 opacity-100 color-lightgray">
+              <a *ngIf="i === 4" theme routerLink="company_announcements" class="px-4 py-3 list-group-item list-group-item-action border-0 fw-light">
+                <span class="row align-items-center">
+                  <div class="col-md-12 text-center">
+                    <span class="fw-semibold announcement-date text-primary">{{ 'see_all_notifications' | translate }}</span>
+                  </div>
+                </span>                            
+              </a>
+            </span>            
+          </div>
+          <div *ngIf="!announcements.length" class="z-1 w-100 list-group collapse shadow-sm mt-3 position-absolute top-100" id="notificationsCollapse">
+            <span theme *ngIf="!announcements.length" class="px-4 py-3 list-group-item list-group-item-action border-0">
+              <span class="fw-light">{{ 'no_company_announcements_found' | translate }}</span>
+            </span>
+          </div>
+        </span>
+        <span theme class="user-welcome" data-bs-toggle="collapse" href="#profileCollapse" role="button" aria-expanded="false">{{ 'header_greeting' | translate }}, {{currentUser?.first_name}}</span>
+        <span theme class="border-0 ps-2" type="button" data-bs-toggle="collapse" href="#profileCollapse" role="button" aria-expanded="false">
+          <i class="fa-solid fa-angle-down"></i>
+        </span>
+        <div class="z-3 w-100 list-group collapse shadow-sm mt-3 position-absolute top-100" id="profileCollapse">
+          <a theme routerLink="profile" class="px-4 py-3 list-group-item list-group-item-action border-0">
+              <span class="fw-light">{{ 'header_profile' | translate }}</span>
+          </a>
+          <a theme routerLink="settings" class="px-4 py-3 list-group-item list-group-item-action border-0">
+            <span class="fw-light">{{ 'header_settings' | translate }}</span>
+          </a>
+          <a theme class="px-4 py-3 list-group-item list-group-item-action border-0" (click)="logout()">
+            <span class="fw-light">{{ 'header_logout' | translate }}</span>
+          </a>
+        </div>
+      </a>       
+    </div>
+  </div>
+</div>

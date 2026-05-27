@@ -1,0 +1,115 @@
+<div #modalDialog class="modal fade" id="{{modalId}}" tabindex="-1">
+  <div class="modal-dialog" [class.modal-dialog-centered]="centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5">{{modalTitle}}</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" (click)="cancelAction()"></button>
+      </div>
+      <div class="modal-body">
+        <ng-template [ngIf]="modalType === modalTypeRefData.Confirmation">
+          <p>{{modalBody}}</p>
+        </ng-template>
+        <ng-template [ngIf]="modalType === modalTypeRefData.VehicleBookingEvent">
+          <div class="accordion fs-6" id="BookingDetails">
+            <ul class="nav nav-tabs">
+              <li class="nav-item">
+                <a class="nav-link active" (click)="navTab(0, $event)">Billing</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" (click)="navTab(1, $event)">Booking Details</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" (click)="navTab(2, $event)">Vehicle Details</a>
+              </li>
+            </ul>
+            <div *ngIf="activeTab === 0">
+              <div class="row mt-2">
+                <div class="row mt-2">
+                  <label for="basic-url" class="form-label">Customer Name</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-user-tie"></i></span>
+                    <input type="text" class="form-control" value="{{vehicleBookingEvent?.CustomerName}}" disabled>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <label for="basic-url" class="form-label">Tax number</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-landmark"></i></span>
+                    <input type="text" class="form-control" value="{{vehicleBookingEvent?.TaxNumber}}" disabled>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <label for="basic-url" class="form-label">Country</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-earth-europe"></i></span>
+                    <input type="text" class="form-control" value="{{vehicleBookingEvent?.Country}}" disabled>
+                  </div>
+                </div>
+                <div class="row mt-2">
+                  <label for="basic-url" class="form-label">Total</label>
+                  <div class="input-group mb-3">
+                    <span class="input-group-text"><i class="fa-solid fa-receipt"></i></span>
+                    <input type="text" class="form-control" value="{{vehicleBookingEvent?.Price?.toFixed(2)}}" disabled>
+                    <span class="input-group-text"><i class="fa-solid fa-euro-sign"></i></span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="activeTab === 1">
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Check-out / Check-in</label>
+                <div class="input-group mb-3">
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.DateFrom}}" disabled>
+                  <span class="input-group-text"><i class="fa-regular fa-calendar-days"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.DateTo}}" disabled>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Check-out Station</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-plane-departure"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.CheckOut}}" disabled>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Check-in Station</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-plane-arrival"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.CheckIn}}" disabled>
+                </div>
+              </div>
+            </div>
+            <div *ngIf="activeTab === 2">
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Vehicle Model</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-car"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.VehicleModel}}" disabled>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Registration</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-paperclip"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.VehicleRegistration}}" disabled>
+                </div>
+              </div>
+              <div class="row mt-2">
+                <label for="basic-url" class="form-label">Mileage</label>
+                <div class="input-group mb-3">
+                  <span class="input-group-text"><i class="fa-solid fa-road"></i></span>
+                  <input type="text" class="form-control" value="{{vehicleBookingEvent?.VehicleMileage}}" disabled>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ng-template>
+      </div>
+      <div class="modal-footer">
+        <button *ngIf="!!cancelText" type="button" [ngClass]="cancelClass" class="btn btn-secondary" data-bs-dismiss="modal" (click)="cancelAction()">{{cancelText}}</button>
+        <button *ngIf="!!confirmText" type="button" [ngClass]="confirmClass" class="btn btn-primary" data-bs-dismiss="modal" (click)="confirmAction()">{{confirmText}}</button>
+      </div>
+    </div>
+  </div>
+  <button *ngIf="instanciated" #hiddenToggler class="btn" type="button" data-bs-toggle="modal"></button>
+</div>
